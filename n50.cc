@@ -94,10 +94,10 @@ int n50_main(int argc, char *argv[]) {
         contig_i += read_from_sizes(is, sizes, total_size, E);
       else
         contig_i += read_from_fasta(is, sizes, total_size, E);
-    } catch(std::ios::failure) {
+    } catch(std::ios::failure&) {
       std::cerr << "Error with file '" << file << '\'' << std::endl;
       return EXIT_FAILURE;
-    } catch(std::runtime_error e) {
+    } catch(std::runtime_error& e) {
       std::cerr << "Error with file '" << file << "': " << e.what() << std::endl;
     }
   }
@@ -129,22 +129,22 @@ int n50_main(int argc, char *argv[]) {
   }
   if(args.sum_flag || args.all_flag) {
     if(!args.no_header_flag)
-      std::cout << "Sequence ";
+      std::cout << (args.terse_flag ? "S" :"Sequence") << ' ';
     std::cout << sum_size << '\n';
   }
   if(args.average_flag || args.all_flag) {
     if(!args.no_header_flag)
-      std::cout << "Average ";
+      std::cout << (args.terse_flag ? "A" : "Average") << ' ';
     std::cout << ((double)sum_size / sizes.size()) << "\n";
   }
   if(args.Esize_flag || args.all_flag) {
     if(!args.no_header_flag)
-      std::cout << "E-size ";
+      std::cout << (args.terse_flag ? "E" : "E-size") << ' ';
     std::cout << E << '\n';
   }
   if(args.count_flag || args.all_flag) {
     if(!args.no_header_flag)
-      std::cout << "Count ";
+      std::cout << (args.terse_flag ? "C" : "Count") << ' ';
     std::cout << contig_i << '\n';
   }
 
